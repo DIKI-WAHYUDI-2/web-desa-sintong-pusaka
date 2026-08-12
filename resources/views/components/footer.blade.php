@@ -1,96 +1,68 @@
-<footer class="bg-primary text-white">
-    <div class="container mx-auto px-4 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-8">
-            <!-- Logo dan Deskripsi -->
-            <div class="space-y-4">
-                <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 bg-secondary rounded-lg flex items-center justify-center">
+<footer class="bg-[var(--primary-dark)] pt-14 text-[#C6D6CB]">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="grid grid-cols-1 gap-10 pb-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-8">
+
+            <!-- Brand -->
+            <div>
+                <div class="mb-4 flex items-center gap-3">
+                    <div
+                        class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border border-secondary font-serif text-sm font-bold text-white">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Lambang_Kabupaten_Rokan_Hilir.png"
-                            alt="Logo Kabupaten Rokan Hilir">
+                            alt="Kabupaten Rokan Hilir" class="h-32 w-32 object-contain">
                     </div>
                     <div>
-                        <h3 class="text-lg font-semibold">Kepenghuluan Sintong Pusaka</h3>
-                        <p class="text-sm opacity-80">Kabupaten Rokan Hilir</p>
+                        <h4 class="text-[15px] font-semibold text-white">Kepenghuluan Sintong Pusaka</h4>
+                        <p class="text-xs text-[#9FB3A6]">Kecamatan Tanah Putih, Kabupaten Rokan Hilir, Provinsi Riau</p>
                     </div>
                 </div>
-                <p class="text-sm opacity-90 leading-relaxed">
-                    Desa yang damai, berbudaya, dan sejahtera. Bersama membangun masa depan yang lebih baik untuk
-                    generasi mendatang.
+
+                <p class="max-w-[260px] text-sm leading-relaxed text-[#9FB3A6]">
+                    Portal resmi informasi dan layanan Kepenghuluan Sintong Pusaka.
                 </p>
             </div>
 
-            <!-- Tautan Cepat -->
+            <!-- Navigasi -->
             <div>
-                <h4 class="font-semibold mb-4">Tautan Cepat</h4>
-                <div class="space-y-2">
-                    @php
-                        $quickLinks = [
-                            ['name' => 'Profil Desa', 'href' => '#profil'],
-                            ['name' => 'Potensi & Wisata', 'href' => '#potensi'],
-                            ['name' => 'Berita Terkini', 'href' => '#berita'],
-                            ['name' => 'Galeri', 'href' => '#galeri'],
-                            ['name' => 'Kontak Kami', 'href' => '#kontak'],
-                        ];
-                    @endphp
+                <h5 class="mb-4 text-xs font-bold uppercase tracking-[0.08em] text-white">
+                    Navigasi
+                </h5>
 
-                    @foreach($quickLinks as $link)
-                        <a href="{{ $link['href'] }}" class="block text-sm opacity-80 hover:opacity-100 transition-opacity">
-                            {{ $link['name'] }}
-                        </a>
-                    @endforeach
-                </div>
+                <ul class="space-y-2.5 text-sm text-[#C6D6CB]">
+                    <li><a href="#profil" class="transition hover:text-white hover:underline">Profil Desa</a></li>
+                    <li><a href="#berita" class="transition hover:text-white hover:underline">Berita</a></li>
+                    <li><a href="#galeri" class="transition hover:text-white hover:underline">Galeri</a></li>
+                    <li><a href="#lokasi" class="transition hover:text-white hover:underline">Lokasi</a></li>
+                </ul>
             </div>
 
-            <!-- Kontak dan Media Sosial -->
+            <!-- Layanan -->
             <div>
-                <h4 class="font-semibold mb-4">Hubungi Kami</h4>
-                <div class="space-y-3 mb-6">
-                    <div class="flex items-center space-x-2 text-sm">
-                        <i data-lucide="map-pin" class="w-4 h-4 opacity-80"></i>
-                        <span class="opacity-90">Jl. H.Nukman, Sintong, Kec. Tanah Putih, Kab Rokan Hilir,
-                            Riau</span>
-                    </div>
-                    <div class="flex items-center space-x-2 text-sm">
-                        <i data-lucide="phone" class="w-4 h-4 opacity-80"></i>
-                        <span class="opacity-90">(021) 1234-5678</span>
-                    </div>
-                    <div class="flex items-center space-x-2 text-sm">
-                        <i data-lucide="mail" class="w-4 h-4 opacity-80"></i>
-                        <span class="opacity-90">info@desasejahtera.go.id</span>
-                    </div>
-                </div>
-
-                <div>
-                    <h5 class="text-sm font-medium mb-3">Media Sosial</h5>
-                    <div class="flex space-x-2">
-                        <a href="#"
-                            class="w-10 h-10 bg-secondary text-white rounded-full flex items-center justify-center hover:bg-secondary/90 transition-colors">
-                            <i data-lucide="facebook" class="w-4 h-4"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-secondary text-white rounded-full flex items-center justify-center hover:bg-secondary/90 transition-colors">
-                            <i data-lucide="instagram" class="w-4 h-4"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-secondary text-white rounded-full flex items-center justify-center hover:bg-secondary/90 transition-colors">
-                            <i data-lucide="youtube" class="w-4 h-4"></i>
-                        </a>
-                    </div>
-                </div>
+                <h5 class="mb-4 text-xs font-bold uppercase tracking-[0.08em] text-white"> Layanan </h5>
+                <ul class="space-y-2.5 text-sm leading-relaxed text-[#C6D6CB]">
+                    <li>Senin - Jumat</li>
+                    <li>08.00 - 16.00 WIB</li>
+                    <li>Hari libur nasional tutup</li>
+                </ul>
             </div>
+
+            <!-- Kontak -->
+            <div>
+                <h5 class="mb-4 text-xs font-bold uppercase tracking-[0.08em] text-white">
+                    Kontak
+                </h5>
+
+                <ul class="space-y-2.5 text-sm leading-relaxed text-[#C6D6CB]">
+                    <li>Jl. Sintong Pusaka, Kec. Tanah Putih</li>
+                    <li>Kabupaten Rokan Hilir, Riau</li>
+                    <li>(0767) 000-000</li>
+                    <li>desa.sintongpusaka@rohilkab.go.id</li>
+                </ul>
+            </div>
+
         </div>
 
-        <div class="border-t border-white/20 mt-8 pt-6 text-center">
-            <p class="text-sm opacity-80">
-                Developed by KKN UIN Suska 2025 <br>
-                © {{ date('Y') }} Kepenghuluan Sintong Pusaka. All Right Reserved
-            </p>
-        </div>
-    </div>
+        <!-- Copyright -->
+        <div class="border-t border-white/10 py-5 text-center text-xs text-[#9FB3A6]">
+            © {{ date('Y') }} Pemerintah Kepenghuluan Sintong Pusaka - Seluruh hak cipta dilindungi. </div>
 </footer>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        lucide.createIcons();
-    });
-</script>

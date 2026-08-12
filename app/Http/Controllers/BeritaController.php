@@ -37,8 +37,11 @@ class BeritaController extends Controller
         // Tambahkan slug dari judul
         $validatedData['slug'] = Str::slug($validatedData['judul']);
 
-        // Folder tujuan upload di hosting
-        $targetPath = base_path('uploads/berita_images');
+        // Folder tujuan upload (harus di dalam public/ biar bisa diakses browser)
+        $targetPath = public_path('uploads/berita_images');
+        if (!file_exists($targetPath)) {
+            mkdir($targetPath, 0755, true);
+        }
 
         // Handle upload 3 gambar
         foreach (['gambar', 'gambar2', 'gambar3'] as $field) {
@@ -89,8 +92,8 @@ class BeritaController extends Controller
         // Siapkan data awal
         $data = $validatedData;
 
-        // Folder tujuan upload
-        $targetPath = base_path('uploads/berita_images');
+        // Folder tujuan upload (harus di dalam public/ biar bisa diakses browser)
+        $targetPath = public_path('uploads/berita_images');
         if (!file_exists($targetPath)) {
             mkdir($targetPath, 0755, true);
         }

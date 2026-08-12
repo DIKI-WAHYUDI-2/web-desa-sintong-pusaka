@@ -1,0 +1,25 @@
+{
+  "hash": "b1a5e268",
+  "configHash": "7c42b224",
+  "lockfileHash": "9a643303",
+  "browserHash": "ce2ef2cc",
+  "optimized": {
+    "sweetalert2": {
+      "src": "../../node_modules/sweetalert2/dist/sweetalert2.esm.all.js",
+      "file": "sweetalert2.js",
+      "fileHash": "1a9ef827",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "74b6fa66",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-PZ5AY32C": {
+      "file": "chunk-PZ5AY32C.js"
+    }
+  }
+}

@@ -6,16 +6,22 @@ use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 use Session;
 
 class AuthController extends Controller
 {
     public function showLoginForm()
     {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
         return view('auth.login');
     }
 
-    public function storeAkunCalonSiswa(Request $request)
+    public function register(Request $request)
     {
         $validated = $request->validate([
             'email' => 'required|email',
@@ -37,14 +43,29 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        $throttleKey = Str::lower($credentials['email']) . '|' . $request->ip();
+
+        if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
+            $seconds = RateLimiter::availableIn($throttleKey);
+            return redirect()->route('login')
+                ->with('error', "Terlalu banyak percobaan login. Coba lagi dalam {$seconds} detik.");
+        }
+
         $akun = Pengguna::where('email', $credentials['email'])->first();
 
         if ($akun && Hash::check($credentials['password'], $akun->password)) {
+            RateLimiter::clear($throttleKey);
+
+            // Cegah session fixation: buat session id baru setelah login berhasil
+            $request->session()->regenerate();
+
             Auth::login($akun);
             return redirect()->route('dashboard')->with('success', 'Login berhasil!');
-        } else {
-            return redirect()->route('login')->with('error', 'Email atau password salah!');
         }
+
+        RateLimiter::hit($throttleKey, 60);
+
+        return redirect()->route('login')->with('error', 'Email atau password salah!');
     }
 
     public function logout(Request $request)

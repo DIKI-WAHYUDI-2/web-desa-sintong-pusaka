@@ -1,103 +1,202 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.admin')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kepenghuluan Sintong Pusaka - Kabupaten Rokan Hilir</title>
-    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/5/5a/Lambang_Kabupaten_Rokan_Hilir.png"
-        type="image/png">
-    {{-- Lucide Icons --}}
-    <script src="https://unpkg.com/lucide@latest"></script>
+@section('title', 'Dashboard')
+@section('page-eyebrow', 'Dashboard')
+@section('page-title', 'Selamat datang, Admin')
+@section('page-subtitle', 'Ringkasan aktivitas admin panel')
 
-    {{-- Tailwind & Alpine via Vite --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <!-- Chart.js -->
+@push('head')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@endpush
 
-</head>
-
-<body class="bg-gray-50 text-gray-900">
-    <div class="flex">
-        <!-- SIDEBAR -->
-        @include('components.sidebar');
-
-        <!-- CONTENT -->
-        <main class="flex-1 p-6 ml-64 space-y-6">
-            <!-- Dashboard Title -->
-            <div>
-                <h1 class="text-2xl font-bold">Dashboard</h1>
-                <p class="text-gray-600 mt-1">Selamat datang di admin dashboard</p>
-            </div>
-
-            <!-- Statistik -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Total Berita -->
-                <div class="p-6 bg-white rounded-2xl shadow flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-600">Total Berita</p>
-                        <p class="text-2xl font-bold mt-2">{{ $totalBerita }}</p>
-                    </div>
-                    <!-- Heroicon: DocumentText -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-600" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 4H7a2 2 0 01-2-2V6a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z" />
-                    </svg>
+@section('content')
+    {{-- Statistik --}}
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div class="rounded-3xl border border-border bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-muted-foreground">Total Berita</p>
+                    <h3 class="mt-2 text-2xl font-bold text-foreground">{{ $totalBerita }}</h3>
                 </div>
-
-                <!-- Total Galeri -->
-                <div class="p-6 bg-white rounded-2xl shadow flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-600">Total Galeri</p>
-                        <p class="text-2xl font-bold mt-2">{{ $totalGaleri }}</p>
-                    </div>
-                    <!-- Heroicon: Photo -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-600" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm16 0l-8 8-4-4-4 4" />
-                    </svg>
-                </div>
-
-                <!-- Total Aparat -->
-                <div class="p-6 bg-white rounded-2xl shadow flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-600">Total Aparat</p>
-                        <p class="text-2xl font-bold mt-2">{{ $totalAparat }}</p>
-                    </div>
-                    <!-- Heroicon: User Solid (warna hijau) -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-600" fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path fill-rule="evenodd"
-                            d="M12 2a5 5 0 100 10 5 5 0 000-10zm-7 16a7 7 0 1114 0v2a1 1 0 01-1 1H6a1 1 0 01-1-1v-2z"
-                            clip-rule="evenodd" />
-                    </svg>
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#DCF3E3] text-primary">
+                    <i data-lucide="file-text" class="h-6 w-6"></i>
                 </div>
             </div>
+            <p class="mt-4 text-sm text-muted-foreground">Artikel yang telah dipublikasikan</p>
+        </div>
 
-            <!-- Berita & Galeri Terbaru -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Berita -->
-                <div class="p-6 bg-white rounded-2xl shadow">
-                    <h3 class="mb-4 font-semibold">Statistik Berita</h3>
-                    <canvas id="chartBerita" class="w-full h-64"></canvas>
+        <div class="rounded-3xl border border-border bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-muted-foreground">Total Galeri</p>
+                    <h3 class="mt-2 text-2xl font-bold text-foreground">{{ $totalGaleri }}</h3>
                 </div>
-
-                <!-- Galeri (diganti grafik) -->
-                <div class="p-6 bg-white rounded-2xl shadow">
-                    <h3 class="mb-4 font-semibold">Statistik Galeri</h3>
-                    <canvas id="chartGaleri" class="w-full h-64"></canvas>
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FBEFD1] text-[#8a6a1e]">
+                    <i data-lucide="image" class="h-6 w-6"></i>
                 </div>
             </div>
-        </main>
+            <p class="mt-4 text-sm text-muted-foreground">Album foto kegiatan desa</p>
+        </div>
+
+        <div class="rounded-3xl border border-border bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-muted-foreground">Total Aparat</p>
+                    <h3 class="mt-2 text-2xl font-bold text-foreground">{{ $totalAparat }}</h3>
+                </div>
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                    <i data-lucide="users" class="h-6 w-6"></i>
+                </div>
+            </div>
+            <p class="mt-4 text-sm text-muted-foreground">Perangkat pemerintahan terdaftar</p>
+        </div>
     </div>
 
+    {{-- Grafik --}}
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div class="rounded-3xl border border-border bg-white p-6 shadow-sm">
+            <h3 class="mb-4 flex items-center gap-2 font-serif text-sm font-semibold text-[#123B26]">
+                <i data-lucide="bar-chart-3" class="h-4 w-4 text-primary"></i>
+                Statistik Berita
+            </h3>
+            <canvas id="chartBerita" class="h-64 w-full"></canvas>
+        </div>
+
+        <div class="rounded-3xl border border-border bg-white p-6 shadow-sm">
+            <h3 class="mb-4 flex items-center gap-2 font-serif text-sm font-semibold text-[#123B26]">
+                <i data-lucide="line-chart" class="h-4 w-4 text-secondary"></i>
+                Statistik Galeri
+            </h3>
+            <canvas id="chartGaleri" class="h-64 w-full"></canvas>
+        </div>
+    </div>
+
+    {{-- Berita Terbaru --}}
+    <div class="rounded-3xl border border-border bg-white shadow-sm">
+        <div class="flex flex-col gap-3 border-b border-border px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h2 class="flex items-center gap-2 text-lg font-semibold text-foreground">
+                    <i data-lucide="newspaper" class="h-5 w-5 text-primary"></i>
+                    Berita Terbaru
+                </h2>
+                <p class="mt-1 text-sm text-muted-foreground">5 artikel yang terakhir ditambahkan</p>
+            </div>
+            <a href="{{ route('berita') }}"
+                class="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-medium text-primary">
+                <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>
+                Lihat semua
+            </a>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-muted/60">
+                    <tr class="text-left text-muted-foreground">
+                        <th class="px-6 py-3 font-medium">Judul</th>
+                        <th class="px-6 py-3 font-medium">Kategori</th>
+                        <th class="px-6 py-3 font-medium">Organisasi</th>
+                        <th class="px-6 py-3 text-right font-medium">Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-border">
+                    @forelse ($beritaTerbaru as $item)
+                        <tr class="hover:bg-muted/40">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-muted">
+                                        @if ($item->gambar)
+                                            <img src="{{ asset($item->gambar) }}" alt=""
+                                                class="h-full w-full object-cover">
+                                        @else
+                                            <div class="flex h-full w-full items-center justify-center text-xs font-semibold text-primary">
+                                                {{ strtoupper(substr($item->judul, 0, 2)) }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="max-w-xs truncate font-medium text-foreground">{{ $item->judul }}</div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-muted-foreground">{{ $item->kategori ?? '-' }}</td>
+                            <td class="px-6 py-4 text-muted-foreground">{{ $item->organisasi ?? '-' }}</td>
+                            <td class="px-6 py-4 text-right text-muted-foreground">
+                                {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d M Y') }}
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="px-6 py-8 text-center text-muted-foreground">Belum ada berita.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{-- Galeri Terbaru --}}
+    <div class="rounded-3xl border border-border bg-white shadow-sm">
+        <div class="flex flex-col gap-3 border-b border-border px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h2 class="flex items-center gap-2 text-lg font-semibold text-foreground">
+                    <i data-lucide="images" class="h-5 w-5 text-secondary"></i>
+                    Galeri Terbaru
+                </h2>
+                <p class="mt-1 text-sm text-muted-foreground">5 album yang terakhir ditambahkan</p>
+            </div>
+            <a href="{{ route('galeri') }}"
+                class="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-medium text-primary">
+                <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>
+                Lihat semua
+            </a>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-muted/60">
+                    <tr class="text-left text-muted-foreground">
+                        <th class="px-6 py-3 font-medium">Album</th>
+                        <th class="px-6 py-3 font-medium">Kategori</th>
+                        <th class="px-6 py-3 font-medium">Organisasi</th>
+                        <th class="px-6 py-3 text-right font-medium">Jumlah Foto</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-border">
+                    @forelse ($galeriTerbaru as $item)
+                        <tr class="hover:bg-muted/40">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-muted">
+                                        @if ($item->fotos->first())
+                                            <img src="{{ asset('storage/' . $item->fotos->first()->gambar) }}" alt=""
+                                                class="h-full w-full object-cover">
+                                        @else
+                                            <div class="flex h-full w-full items-center justify-center text-xs font-semibold text-secondary">
+                                                {{ strtoupper(substr($item->judul, 0, 2)) }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="max-w-xs truncate font-medium text-foreground">{{ $item->judul }}</div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-muted-foreground">{{ $item->kategori ?? '-' }}</td>
+                            <td class="px-6 py-4 text-muted-foreground">{{ $item->organisasi ?? '-' }}</td>
+                            <td class="px-6 py-4 text-right">
+                                <span class="rounded-full bg-[#FBEFD1] px-2.5 py-1 text-xs font-semibold text-[#8a6a1e]">
+                                    {{ $item->fotos_count }} foto
+                                </span>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="px-6 py-8 text-center text-muted-foreground">Belum ada galeri.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+@endsection
+
+@push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-
-            // Data untuk chart
             const chartData = {
                 berita: {
                     labels: @json($bulanBerita ?? []),
@@ -109,7 +208,6 @@
                 }
             };
 
-            // Jika data kosong, gunakan default
             if (chartData.berita.labels.length === 0) {
                 chartData.berita.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei'];
                 chartData.berita.data = [0, 0, 0, 0, 0];
@@ -117,7 +215,6 @@
                 chartData.galeri.data = [10, 15, 8, 20, 12];
             }
 
-            // === Grafik Berita per Bulan ===
             const ctxBerita = document.getElementById('chartBerita').getContext('2d');
             new Chart(ctxBerita, {
                 type: 'bar',
@@ -126,51 +223,50 @@
                     datasets: [{
                         label: 'Jumlah Berita',
                         data: chartData.berita.data,
-                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
+                        backgroundColor: 'rgba(31, 107, 61, 0.5)',
+                        borderColor: 'rgba(31, 107, 61, 1)',
+                        borderWidth: 1,
+                        borderRadius: 6
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: true, // aktifkan
-                    aspectRatio: 2, // 2 artinya lebar : tinggi = 2:1
+                    maintainAspectRatio: true,
+                    aspectRatio: 2,
+                    plugins: { legend: { display: false } },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            ticks: {
-                                precision: 0
-                            }
+                            ticks: { precision: 0 }
                         }
                     }
                 }
             });
 
-            // === Grafik Galeri per Bulan ===
             const ctxGaleri = document.getElementById('chartGaleri').getContext('2d');
-
             if (chartData.galeri.labels.length === 0) {
                 chartData.galeri.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei'];
                 chartData.galeri.data = [10, 15, 8, 20, 12];
             }
 
-            window.chartGaleri = new Chart(ctxGaleri, {
+            new Chart(ctxGaleri, {
                 type: 'line',
                 data: {
                     labels: chartData.galeri.labels,
                     datasets: [{
                         label: 'Jumlah Foto',
                         data: chartData.galeri.data,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                        borderColor: 'rgba(217, 174, 62, 1)',
+                        backgroundColor: 'rgba(217, 174, 62, 0.15)',
                         fill: true,
                         tension: 0.4
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: true, // Ubah ke true
-                    aspectRatio: 2, // Rasio lebar:tinggi
+                    maintainAspectRatio: true,
+                    aspectRatio: 2,
+                    plugins: { legend: { display: false } },
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -184,6 +280,4 @@
             });
         });
     </script>
-</body>
-
-</html>
+@endpush

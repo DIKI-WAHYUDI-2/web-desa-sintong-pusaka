@@ -33,12 +33,12 @@ Route::middleware('authcheck')->group(function () {
     Route::put('/galeri/{id}', [GaleriController::class, 'update'])->name('galeri.update');
     Route::delete('/galeri/{id}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
 
-    Route::get('/aparat', [AparatDesaController::class, 'index'])->name('aparat');
-    Route::get('/aparat/create', [AparatDesaController::class, 'create'])->name('aparat.create');
-    Route::post('/aparat', [AparatDesaController::class, 'store'])->name('aparat.store');
-    Route::get('/aparat/{id}/edit', [AparatDesaController::class, 'edit'])->name('aparat.edit');
-    Route::put('/aparat/{id}', [AparatDesaController::class, 'update'])->name('aparat.update');
-    Route::delete('/aparat/{id}', [AparatDesaController::class, 'destroy'])->name('aparat.destroy');
+    Route::get('/aparat', [AparatDesaController::class, 'index'])->name('aparat_desa.index');
+    Route::get('/aparat/create', [AparatDesaController::class, 'create'])->name('aparat_desa.create');
+    Route::post('/aparat', [AparatDesaController::class, 'store'])->name('aparat_desa.store');
+    Route::get('/aparat/{aparatDesa}/edit', [AparatDesaController::class, 'edit'])->name('aparat_desa.edit');
+    Route::put('/aparat/{aparatDesa}', [AparatDesaController::class, 'update'])->name('aparat_desa.update');
+    Route::delete('/aparat/{aparatDesa}', [AparatDesaController::class, 'destroy'])->name('aparat_desa.destroy');
 
     Route::get('/demografis', [DemografisController::class, 'index'])->name('demografis');
     Route::post('/demografis/update', [DemografisController::class, 'update'])->name('demografis.update');

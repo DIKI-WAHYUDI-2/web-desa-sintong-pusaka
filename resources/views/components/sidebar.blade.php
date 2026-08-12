@@ -1,109 +1,61 @@
 <!-- SIDEBAR -->
-<aside class="fixed top-0 left-0 h-full w-64 bg-slate-900 text-white shadow-lg flex flex-col">
+<aside class="fixed left-0 top-0 z-40 hidden h-full w-72 flex-col bg-[#123B26] text-white lg:flex">
     <!-- Logo & Title -->
-    <div class="flex items-center gap-3 px-6 py-6 border-b border-slate-800">
-        <div class="w-12 h-12 rounded-lg flex items-center justify-center">
+    <div class="flex items-center gap-3 border-b border-white/10 px-6 py-6">
+        <div
+            class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white ring-2 ring-secondary/60">
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Lambang_Kabupaten_Rokan_Hilir.png"
-                alt="Logo Kabupaten Rokan Hilir" class="object-contain">
+                alt="Logo Kabupaten Rokan Hilir" class="h-9 w-9 object-contain">
         </div>
-        <div>
-            <h2 class="text-sm font-bold">Kep. Sintong Pusaka</h2>
-            <span class="text-xs text-gray-400">Admin Panel</span>
+        <div class="min-w-0">
+            <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary">Admin Panel</p>
+            <h2 class="truncate font-serif text-base font-semibold text-white">Kep. Sintong Pusaka</h2>
         </div>
     </div>
 
-    @if(session('success'))
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-            Swal.fire({
-                title: 'Sukses!',
-                text: '{{ session('success') }}',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
-
     <!-- Nav Menu -->
-    <nav class="flex-1 py-6 px-4 space-y-2">
-        @if (Request::routeIs('dashboard'))
-            <a href="{{ route('dashboard') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-blue-600 text-white shadow">
-                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                <span class="font-medium">Dashboard</span>
-            </a>
-        @else
-            <a href="{{ route('dashboard') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition">
-                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                <span class="font-medium">Dashboard</span>
-            </a>
-        @endif
+    <nav class="flex-1 space-y-6 overflow-y-auto px-4 py-6">
+        @php
+            $groups = [
+                'Utama' => [['route' => 'dashboard', 'icon' => 'layout-dashboard', 'label' => 'Dashboard']],
+                'Konten' => [
+                    ['route' => 'berita', 'icon' => 'newspaper', 'label' => 'Berita'],
+                    ['route' => 'galeri', 'icon' => 'image', 'label' => 'Galeri'],
+                ],
+                'Data Desa' => [
+                    ['route' => 'aparat_desa.index', 'icon' => 'users', 'label' => 'Aparat Desa'],
+                    ['route' => 'demografis', 'icon' => 'globe-2', 'label' => 'Demografis'],
+                ],
+            ];
+        @endphp
 
-        @if (Request::routeIs('berita'))
-            <a href="{{ route('berita') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-blue-600 text-white shadow">
-                <i data-lucide="newspaper" class="w-5 h-5"></i>
-                <span class="font-medium">Berita</span>
-            </a>
-        @else
-            <a href="{{ route('berita') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition">
-                <i data-lucide="newspaper" class="w-5 h-5"></i>
-                <span class="font-medium">Berita</span>
-            </a>
-        @endif
-
-        @if (Request::routeIs('galeri'))
-            <a href="{{ route('galeri') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-blue-600 text-white shadow">
-                <i data-lucide="image" class="w-5 h-5"></i>
-                <span class="font-medium">Galeri</span>
-            </a>
-        @else
-            <a href="{{ route('galeri') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition">
-                <i data-lucide="image" class="w-5 h-5"></i>
-                <span class="font-medium">Galeri</span>
-            </a>
-        @endif
-
-        @if (Request::routeIs('aparat'))
-            <a href="{{ route('aparat') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-blue-600 text-white shadow">
-                <i data-lucide="users" class="w-5 h-5"></i>
-                <span class="font-medium">Aparat Desa</span>
-            </a>
-        @else
-            <a href="{{ route('aparat') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition">
-                <i data-lucide="users" class="w-5 h-5"></i>
-                <span class="font-medium">Aparat Desa</span>
-            </a>
-        @endif
-
-        @if (Request::routeIs('demografis'))
-            <a href="{{ route('demografis') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-blue-600 text-white shadow">
-                <i data-lucide="globe2" class="w-5 h-5"></i>
-                <span class="font-medium">Demografis</span>
-            </a>
-        @else
-            <a href="{{ route('demografis') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition">
-                <i data-lucide="globe2" class="w-5 h-5"></i>
-                <span class="font-medium">Demografis</span>
-            </a>
-        @endif
+        @foreach ($groups as $label => $items)
+            <div>
+                <p class="mb-2 px-3 text-xs font-semibold uppercase tracking-[0.15em] text-white/40">
+                    {{ $label }}
+                </p>
+                <div class="space-y-1.5">
+                    @foreach ($items as $item)
+                        @php $active = Request::routeIs($item['route']) || Request::routeIs($item['route'] . '.*'); @endphp
+                        <a href="{{ route($item['route']) }}"
+                            class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition
+                                {{ $active ? 'bg-white/10 font-semibold text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                            <i data-lucide="{{ $item['icon'] }}" class="h-5 w-5 shrink-0"></i>
+                            <span>{{ $item['label'] }}</span>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
     </nav>
 
     <!-- Logout -->
-    <div class="px-6 py-4 border-t border-slate-800">
+    <div class="border-t border-white/10 px-4 py-5">
         <form id="logout-form" action="{{ route('logout') }}" method="POST">
             @csrf
             <button type="button" onclick="logoutConfirm()"
-                class="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition">
-                <i data-lucide="log-out" class="w-5 h-5"></i>
+                class="flex w-full items-center gap-3 rounded-xl bg-white/5 px-4 py-3 text-sm font-medium text-white/90 transition hover:bg-white/10">
+                <i data-lucide="log-out" class="h-5 w-5"></i>
                 Keluar
             </button>
         </form>
@@ -117,7 +69,7 @@
             text: "Anda akan keluar dari sistem.",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
+            confirmButtonColor: '#1F6B3D',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ya, keluar!',
             cancelButtonText: 'Batal',

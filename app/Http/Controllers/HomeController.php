@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AparatDesa;
 use App\Models\Berita;
 use App\Models\Demografis;
-use App\Models\Galeri;
+use App\Models\GaleriFoto;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -22,27 +22,19 @@ class HomeController extends Controller
             'PKKBN'
         ];
 
-        $queryBase = Berita::query();
+        $selectedBeritaOrg = $request->organisasi ?? 'Kepenghuluan';
 
-        if ($request->has('organisasi')) {
-            $queryBase->where('organisasi', $request->organisasi);
+        $queryBerita = Berita::query()->latest();
+
+        // Filter organisasi
+        if ($selectedBeritaOrg !== 'Kepenghuluan') {
+            $queryBerita->where('organisasi', $selectedBeritaOrg);
         }
 
-        // Berita utama
-        $berita = $queryBase->orderBy('created_at', 'desc')->first();
-
-        // Query kedua
-        $queryBase2 = Berita::query();
-
-        if ($request->has('organisasi')) {
-            $queryBase2->where('organisasi', $request->organisasi);
-        }
-
-        $beritaLain = $queryBase2
-            ->orderBy('created_at', 'desc')
-            ->skip(1)
-            ->take(PHP_INT_MAX)
-            ->get();
+        // 9 berita per halaman
+        $beritas = $queryBerita
+            ->paginate(9)
+            ->withQueryString();
 
         $aparat = AparatDesa::orderByRaw("
             CASE 
@@ -66,12 +58,20 @@ class HomeController extends Controller
         // Kategori bisa di-hardcode juga
         $categories = ['Politik', 'Ekonomi', 'Sosial', 'Budaya', 'Olahraga', 'Teknologi', 'Lingkungan'];
 
-        // Ambil galeri dan ubah format agar siap dipakai Alpine.js
-        $queryGaleri = Galeri::query();
-        if ($request->has('galeri_organisasi')) {
-            $queryGaleri->where('organisasi', $request->galeri_organisasi);
+        // Galeri dipaginate per-foto (bukan per-album) supaya tetap enteng walau datanya banyak
+        $selectedGaleriOrg = $request->galeri_organisasi ?? 'Kepenghuluan';
+
+        $queryGaleriFoto = GaleriFoto::with('galeri')->latest('id');
+
+        if ($selectedGaleriOrg !== 'Kepenghuluan') {
+            $queryGaleriFoto->whereHas('galeri', function ($q) use ($selectedGaleriOrg) {
+                $q->where('organisasi', $selectedGaleriOrg);
+            });
         }
-        $galeri = $queryGaleri->with('fotos')->get();
+
+        $galeriFotos = $queryGaleriFoto
+            ->paginate(12)
+            ->withQueryString();
 
         $demografis = Demografis::first();
         $data = [
@@ -86,6 +86,16 @@ class HomeController extends Controller
             ['label' => 'Luas Perkebunan Sawit', 'value' => $demografis->luas_perkebunan_sawit],
         ];
 
-        return view('home', compact('berita', 'data', 'demografis', 'beritaLain', 'aparat', 'galeri', 'categories', 'organisasi'));
+        return view('home', compact(
+            'beritas',
+            'selectedBeritaOrg',
+            'data',
+            'demografis',
+            'aparat',
+            'galeriFotos',
+            'selectedGaleriOrg',
+            'categories',
+            'organisasi'
+        ));
     }
 }

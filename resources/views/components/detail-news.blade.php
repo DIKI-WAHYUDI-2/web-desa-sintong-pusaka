@@ -183,11 +183,11 @@
             {{-- Gambar Pendukung --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
                 @if($berita->gambar2)
-                    <img src="{{ asset('storage/' . $berita->gambar2) }}" alt="Gambar pendukung 1"
+                    <img src="{{ asset($berita->gambar2) }}" alt="Gambar pendukung 1"
                         class="w-full h-[200px] sm:h-[280px] object-cover rounded-lg">
                 @endif
                 @if($berita->gambar3)
-                    <img src="{{ asset('storage/' . $berita->gambar3) }}" alt="Gambar pendukung 2"
+                    <img src="{{ asset($berita->gambar3) }}" alt="Gambar pendukung 2"
                         class="w-full h-[200px] sm:h-[280px] object-cover rounded-lg">
                 @endif
             </div>

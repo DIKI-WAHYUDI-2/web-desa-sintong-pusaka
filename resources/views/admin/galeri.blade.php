@@ -1,123 +1,80 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.admin')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kepenghuluan Sintong Pusaka - Kabupaten Rokan Hilir</title>
-    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/5/5a/Lambang_Kabupaten_Rokan_Hilir.png"
-        type="image/png">
-    {{-- Lucide Icons --}}
-    <script src="https://unpkg.com/lucide@latest"></script>
+@section('title', 'Kelola Galeri')
+@section('page-title', 'Kelola Galeri')
+@section('page-subtitle', 'Kelola semua gambar dan dokumentasi')
 
-    {{-- Load Tailwind & Alpine (via Vite) --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="bg-gray-100 text-gray-900">
-    <div class="flex">
-        {{-- Sidebar --}}
-        @include('components.sidebar');
-
-        {{-- Main Content --}}
-        <main class="ml-64 flex-1 p-6 space-y-6">
-            <!-- Header -->
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-2xl font-bold">Kelola Galeri</h1>
-                    <p class="text-gray-600 mt-1">Kelola semua gambar dan dokumentasi</p>
-                </div>
-                <a href="{{ route('galeri.create') }}"
-                    class="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    Tambah Gambar
-                </a>
-            </div>
-
-            @if(session('success'))
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                <script>
-                    Swal.fire({
-                        title: 'Sukses!',
-                        text: '{{ session('success') }}',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    });
-                </script>
-            @endif
-
-            @if($errors->any())
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                <script>
-                    Swal.fire({
-                        title: 'Terjadi Kesalahan!',
-                        icon: 'error',
-                        html: `
-                                                                          <ul style="text-align:left;">
-                                                                              @foreach ($errors->all() as $error)
-                                                                                <li>{{ $error }}</li>
-                                                                              @endforeach
-                                                                          </ul>
-                                                                      `,
-                        confirmButtonText: 'OK'
-                    });
-                </script>
-            @endif
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @forelse ($galeri as $item)
-                    <div class="bg-white rounded-lg shadow overflow-hidden">
-                        @if($item->fotos->isNotEmpty())
-                            <img src="{{ asset('storage/' . $item->fotos->first()->gambar) }}" alt="Foto {{ $item->judul }}"
-                                class="w-full h-48 object-cover rounded">
-                        @else
-                            <div class="w-full h-48 bg-gray-200 flex items-center justify-center rounded">
-                                Tidak ada foto
-                            </div>
-                        @endif
-                        <div class="p-4 flex items-center justify-between gap-2">
-                            <h3 class="font-medium text-gray-800 truncate max-w-[70%]">
-                                {{$item->judul}} || {{ $item->kategori }} || {{ $item->organisasi }}
-                            </h3>
-                            <div class="flex gap-2 shrink-0">
-                                <a href="{{ route('galeri.edit', $item->id) }}"
-                                    class="px-2 py-1 border rounded hover:bg-gray-100">
-                                    <i data-lucide="edit" class="w-4 h-4"></i>
-                                </a>
-                                <form action="{{ route('galeri.destroy', $item->id) }}" method="POST"
-                                    id="delete-{{ $item->id }}"
-                                    onsubmit="event.preventDefault(); confirmDelete('{{ $item->id }}')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="px-2 py-1 border rounded text-red-600 hover:bg-red-50">
-                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    {{-- Kalau kosong --}}
-                    <div class="col-span-full text-center py-20 bg-white rounded-lg shadow">
-                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto">
-                            <i data-lucide="upload" class="w-8 h-8 text-gray-400"></i>
-                        </div>
-                        <p class="mt-4 text-gray-600">Belum ada gambar yang ditambahkan.</p>
-                    </div>
-                @endforelse
-            </div>
-        </main>
+@section('content')
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h2 class="flex items-center gap-2 text-lg font-semibold text-foreground">
+                <i data-lucide="image" class="h-5 w-5 text-secondary"></i>
+                Daftar Galeri
+            </h2>
+            <p class="mt-1 text-sm text-muted-foreground">Kelola semua album foto kegiatan desa</p>
+        </div>
+        <a href="{{ route('galeri.create') }}" class="btn-primary">
+            <i data-lucide="plus" class="h-4 w-4"></i>
+            Tambah Gambar
+        </a>
     </div>
 
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        @forelse ($galeri as $item)
+            <div class="overflow-hidden rounded-3xl border border-border bg-white shadow-sm">
+                <div class="relative">
+                    @if($item->fotos->isNotEmpty())
+                        <img src="{{ asset('storage/' . $item->fotos->first()->gambar) }}" alt="Foto {{ $item->judul }}"
+                            class="h-48 w-full object-cover">
+                    @else
+                        <div class="flex h-48 w-full items-center justify-center bg-muted text-sm text-muted-foreground">
+                            Tidak ada foto
+                        </div>
+                    @endif
+                    <span class="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-[#8a6a1e] shadow-sm">
+                        {{ $item->kategori }}
+                    </span>
+                </div>
+                <div class="flex items-center justify-between gap-2 p-5">
+                    <div class="min-w-0">
+                        <h3 class="truncate text-sm font-semibold text-foreground">{{ $item->judul }}</h3>
+                        <p class="mt-0.5 truncate text-xs text-muted-foreground">{{ $item->organisasi }}</p>
+                    </div>
+                    <div class="flex shrink-0 gap-2">
+                        <a href="{{ route('galeri.edit', $item->id) }}" class="btn-edit">
+                            <i data-lucide="pencil" class="h-3.5 w-3.5"></i>
+                        </a>
+                        <form action="{{ route('galeri.destroy', $item->id) }}" method="POST"
+                            id="delete-{{ $item->id }}" onsubmit="event.preventDefault(); confirmDelete('{{ $item->id }}')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-danger">
+                                <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="col-span-full rounded-3xl border border-border bg-white py-20 text-center shadow-sm">
+                <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#FBEFD1]">
+                    <i data-lucide="upload" class="h-8 w-8 text-[#8a6a1e]"></i>
+                </div>
+                <p class="mt-4 text-muted-foreground">Belum ada gambar yang ditambahkan.</p>
+            </div>
+        @endforelse
+    </div>
+@endsection
+
+@push('scripts')
     <script>
-        lucide.createIcons();
         function confirmDelete(id) {
             Swal.fire({
                 title: 'Yakin mau hapus?',
                 text: "Data ini akan dihapus permanen!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
+                confirmButtonColor: '#1F6B3D',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Ya, hapus!',
                 cancelButtonText: 'Batal',
@@ -129,6 +86,4 @@
             });
         }
     </script>
-</body>
-
-</html>
+@endpush

@@ -46,6 +46,19 @@ class DashboardController extends Controller
         $totalGaleri = Galeri::count();
         $totalAparat = AparatDesa::count();
 
-        return view('admin.dashboard', compact('totalGaleri', 'totalAparat', 'bulanBerita', 'totalBerita', 'jumlahBerita', 'bulanGaleri', 'jumlahGaleri'));
+        $beritaTerbaru = Berita::latest('tanggal')->take(5)->get();
+        $galeriTerbaru = Galeri::withCount('fotos')->with(['fotos' => fn($q) => $q->limit(1)])->latest()->take(5)->get();
+
+        return view('admin.dashboard', compact(
+            'totalGaleri',
+            'totalAparat',
+            'bulanBerita',
+            'totalBerita',
+            'jumlahBerita',
+            'bulanGaleri',
+            'jumlahGaleri',
+            'beritaTerbaru',
+            'galeriTerbaru'
+        ));
     }
 }

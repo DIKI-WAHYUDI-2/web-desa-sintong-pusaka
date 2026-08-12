@@ -6,5 +6,4 @@
     @include('components.news')
     @include('components.gallery')
     @include('components.location')
-    @include('components.contact')
 @endsection

@@ -1,56 +1,59 @@
-<section id="beranda" class="relative min-h-[70vh] md:min-h-screen flex items-center">
-    <!-- Background Image -->
-    <div class="absolute inset-0 z-0">
-        <img src="https://media.istockphoto.com/id/1418054291/id/foto/bibit-kelapa-sawit-atau-pembibitan.jpg?s=612x612&w=0&k=20&c=PO6VhJzriR5Z34AwJ3uVT3X_4n2MK8M-1_gMcRZqHKk="
-            alt="Perkebunan kelapa sawit dengan barisan pohon yang teratur dan hijau"
-            class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-black/40"></div>
+<section id="beranda"
+    class="relative overflow-hidden bg-gradient-to-br from-primary via-primary to-primary/90 pt-16 md:pt-20 pb-20 md:pb-28">
+
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-white blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-white blur-3xl"></div>
     </div>
 
-    <!-- Content -->
-    <div class="relative z-10 container mx-auto px-4">
-        <div class="max-w-3xl text-center md:text-left">
-            <h1
-                class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 leading-snug md:leading-tight">
-                Selamat Datang di
-                <span class="block text-secondary">Kepenghuluan Sintong Pusaka</span>
-            </h1>
-            <p class="text-lg sm:text-xl md:text-2xl text-white/90 mb-6 sm:mb-8 leading-relaxed">
-                Desa penghasil kelapa sawit terbaik dengan pertanian berkelanjutan.
-                Bersama membangun ekonomi rakyat yang sejahtera.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 mb-8 sm:mb-12 justify-center md:justify-start">
-                <a href="#profil"
-                    class="bg-secondary hover:bg-secondary/90 text-white px-6 py-3 rounded-lg flex items-center justify-center">
-                    Jelajahi Desa
-                    <i data-lucide="chevron-right" class="w-5 h-5 ml-2"></i>
-                </a>
-            </div>
-
-            <!-- Stats -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 sm:p-6 text-center">
-                    <i data-lucide="users" class="w-8 h-8 text-secondary mx-auto mb-2"></i>
-                    <div class="text-xl sm:text-2xl font-bold text-white">2.720</div>
-                    <div class="text-white/80 text-sm sm:text-base">Penduduk</div>
-                </div>
-                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 sm:p-6 text-center">
-                    <i data-lucide="tree-pine" class="w-8 h-8 text-secondary mx-auto mb-2"></i>
-                    <div class="text-xl sm:text-2xl font-bold text-white">7.000</div>
-                    <div class="text-white/80 text-sm sm:text-base">Ha Sawit</div>
-                </div>
-                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 sm:p-6 text-center">
-                    <i data-lucide="map-pin" class="w-8 h-8 text-secondary mx-auto mb-2"></i>
-                    <div class="text-xl sm:text-2xl font-bold text-white">253,21</div>
-                    <div class="text-white/80 text-sm sm:text-base">Km² Luas Wilayah</div>
-                </div>
-            </div>
+    <div class="relative z-10 mx-auto max-w-4xl px-4 text-center">
+        <div class="mx-auto mb-8 flex h-40 w-40 items-center justify-center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Lambang_Kabupaten_Rokan_Hilir.png"
+                alt="Kabupaten Rokan Hilir" class="h-32 w-32 object-contain">
         </div>
+        <p class="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-secondary">
+            Portal Resmi Pemerintahan Desa
+        </p>
+        <h1 class="font-serif text-4xl font-semibold leading-tight text-white sm:text-5xl md:text-6xl">
+            Kepenghuluan
+            <br class="hidden sm:block">
+            <span class="text-secondary italic">Sintong Pusaka</span>
+        </h1>
+        <div class="mx-auto my-6 h-0.5 w-16 bg-secondary"></div>
+
+        <p class="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg md:text-xl">
+            Desa penghasil kelapa sawit terbaik di Kabupaten Rokan Hilir, membangun ekonomi rakyat yang sejahtera
+            melalui pertanian berkelanjutan dan tata kelola pemerintahan yang transparan.
+        </p>
+        <a href="#profil"
+            class="inline-flex items-center gap-2 rounded-md bg-secondary px-6 py-3 text-sm font-semibold text-primary shadow-lg shadow-black/10 transition hover:brightness-105">
+            Lihat Profil Desa <i data-lucide="arrow-right" class="h-4 w-4"></i>
+        </a>
     </div>
 </section>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        lucide.createIcons();
-    });
-</script>
+{{-- <div class="relative z-10 mt-16 border-t border-border bg-background">
+        <div
+            class="mx-auto grid max-w-6xl grid-cols-1 divide-y divide-border sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:divide-border/60">
+            <div class="border-border/60 px-6 py-8 text-center sm:border-r">
+                <div class="font-serif text-3xl font-bold text-primary">2.720</div>
+                <p class="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                    Jiwa Penduduk
+                </p>
+            </div>
+
+            <div class="border-border/60 px-6 py-8 text-center sm:border-r">
+                <div class="font-serif text-3xl font-bold text-primary">7.000 Ha</div>
+                <p class="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                    Lahan Kelapa Sawit
+                </p>
+            </div>
+
+            <div class="px-6 py-8 text-center">
+                <div class="font-serif text-3xl font-bold text-primary">253,21 Km²</div>
+                <p class="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                    Luas Wilayah
+                </p>
+            </div>
+        </div>
+    </div> --}}
