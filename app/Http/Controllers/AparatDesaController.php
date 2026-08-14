@@ -15,37 +15,41 @@ class AparatDesaController extends Controller
     ) {
 
     }
-    public function index()
+    public function index(Request $request)
     {
-        $aparat = AparatDesa::paginate(10);
-        return view('admin.aparat', compact('aparat'));
+        $validated = $request->validate([
+            'search' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $aparat_desa = $this->aparatDesaService->index($validated['search'] ?? null);
+
+        return view('admin.aparat-desa.index', compact('aparat_desa'));
     }
 
     public function create()
     {
-        return view('admin.aparat-create');
+        return view('admin.aparat-desa.create');
     }
 
     public function store(AparatDesaStoreRequest $request)
     {
         $this->aparatDesaService->store(
-            $request->validated(),
-            $request->file('foto')
+            data: $request->validated(),
+            foto: $request->file('foto')
         );
 
         return redirect()->route('aparat_desa.index')->with('success', 'Data aparat desa berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function edit(AparatDesa $aparat_desa)
     {
-        $aparat = AparatDesa::findOrFail($id);
-        return view('admin.aparat-create', compact('aparat'));
+        return view('admin.aparat-desa.update', compact('aparat_desa'));
     }
 
-    public function update(AparatDesaUpdateRequest $request, AparatDesa $aparatDesa)
+    public function update(AparatDesaUpdateRequest $request, AparatDesa $aparat_desa)
     {
         $this->aparatDesaService->update(
-            aparat: $aparatDesa,
+            aparat: $aparat_desa,
             data: $request->validated(),
             foto: $request->file('foto')
         );
@@ -54,9 +58,9 @@ class AparatDesaController extends Controller
     }
 
 
-    public function destroy(AparatDesa $aparatDesa)
+    public function destroy(AparatDesa $aparat_desa)
     {
-        $this->aparatDesaService->destroy($aparatDesa);
+        $this->aparatDesaService->destroy($aparat_desa);
         return back()->with('success', 'Data berhasil dihapus');
     }
 }

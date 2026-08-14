@@ -19,12 +19,12 @@
             $groups = [
                 'Utama' => [['route' => 'dashboard', 'icon' => 'layout-dashboard', 'label' => 'Dashboard']],
                 'Konten' => [
-                    ['route' => 'berita', 'icon' => 'newspaper', 'label' => 'Berita'],
-                    ['route' => 'galeri', 'icon' => 'image', 'label' => 'Galeri'],
+                    ['route' => 'berita.index', 'icon' => 'newspaper', 'label' => 'Berita'],
+                    ['route' => 'galeri.index', 'icon' => 'image', 'label' => 'Galeri'],
                 ],
                 'Data Desa' => [
                     ['route' => 'aparat_desa.index', 'icon' => 'users', 'label' => 'Aparat Desa'],
-                    ['route' => 'demografis', 'icon' => 'globe-2', 'label' => 'Demografis'],
+                    ['route' => 'demografis.index', 'icon' => 'globe-2', 'label' => 'Demografis'],
                 ],
             ];
         @endphp

@@ -52,7 +52,7 @@ class GaleriTest extends TestCase
             ],
         ]);
 
-        $response->assertRedirect(route('galeri'));
+        $response->assertRedirect(route('galeri.index'));
         $this->assertDatabaseHas('galeri', ['judul' => 'Album Gotong Royong']);
         $galeri = Galeri::where('judul', 'Album Gotong Royong')->first();
         $this->assertCount(2, $galeri->fotos);
@@ -78,7 +78,7 @@ class GaleriTest extends TestCase
 
         $response = $this->delete("/galeri/{$galeri->id}");
 
-        $response->assertRedirect(route('galeri'));
+        $response->assertRedirect(route('galeri.index'));
         $this->assertDatabaseMissing('galeri', ['id' => $galeri->id]);
         $this->assertDatabaseMissing('galeri_fotos', ['galeri_id' => $galeri->id]);
     }

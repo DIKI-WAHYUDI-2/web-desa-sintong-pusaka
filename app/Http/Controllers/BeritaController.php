@@ -1,151 +1,74 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Request\BeritaStoreRequest;
+use App\Http\Request\BeritaUpdateRequest;
+use App\Http\Services\BeritaService;
 use App\Models\Berita;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class BeritaController extends Controller
 {
-    public function index()
+    public function __construct(
+        protected BeritaService $beritaService
+    ) {
+    }
+
+    public function index(Request $request)
     {
-        $berita = Berita::all();
-        return view('admin.berita', compact('berita'));
+        $validated = $request->validate([
+            'search' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $berita = $this->beritaService->index($validated['search'] ?? null);
+
+        return view('admin.berita.index', compact('berita'));
     }
 
     public function create()
     {
-        $kategori = ['Politik', 'Ekonomi', 'Sosial', 'Budaya', 'Olahraga', 'Teknologi', 'Lingkungan'];
-        $organisasi = ['Kepenghuluan', 'Badan Usaha Milik Kepenghuluan', 'Badan Permusyawaratan Kepenghuluan', 'Lembaga Pemberdayaan Masyarakat', 'Karang Taruna', 'PKK', 'PKKBN'];
-        return view('admin.berita-create', compact('kategori', 'organisasi'));
+        return view('admin.berita.create');
     }
 
-    public function store(Request $request)
+    public function store(BeritaStoreRequest $request)
     {
-        // Validasi input
-        $validatedData = $request->validate([
-            'judul' => 'required|string|max:255',
-            'isi' => 'required|string',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'tanggal' => 'required|date',
-            'kategori' => 'required|string|max:100',
-            'organisasi' => 'required|string|max:100',
-        ]);
-
-        // Tambahkan slug dari judul
-        $validatedData['slug'] = Str::slug($validatedData['judul']);
-
-        // Folder tujuan upload (harus di dalam public/ biar bisa diakses browser)
-        $targetPath = public_path('uploads/berita_images');
-        if (!file_exists($targetPath)) {
-            mkdir($targetPath, 0755, true);
-        }
-
-        // Handle upload 3 gambar
-        foreach (['gambar', 'gambar2', 'gambar3'] as $field) {
-            if ($request->hasFile($field)) {
-                $namaFile = time() . '_' . $request->file($field)->getClientOriginalName();
-
-                // Pindahkan file
-                $request->file($field)->move($targetPath, $namaFile);
-
-                // Simpan path untuk DB
-                $validatedData[$field] = '/uploads/berita_images/' . $namaFile;
-            }
-        }
-
-        // Simpan ke database
-        Berita::create($validatedData);
-
-        return redirect()->route('berita')->with('success', 'Berita berhasil ditambahkan.');
+        $this->beritaService->store($request->validated());
+        return redirect()->route('berita.index')->with('success', 'Berita berhasil ditambahkan.');
     }
 
-
-    public function edit($id)
+    public function edit(Berita $berita)
     {
-        // Cari berita berdasarkan ID
-        $berita = Berita::findOrFail($id);
-        $kategori = ['Politik', 'Ekonomi', 'Sosial', 'Budaya', 'Olahraga', 'Teknologi', 'Lingkungan'];
-        $organisasi = ['Kepenghuluan', 'Badan Usaha Milik Kepenghuluan', 'Badan Permusyawaratan Kepenghuluan', 'Lembaga Pemberdayaan Masyarakat', 'Karang Taruna', 'PKK', 'PKKBN'];
-        return view('admin.berita-create', compact('berita', 'kategori', 'organisasi'));
+        return view('admin.berita.update', compact('berita'));
     }
 
-    public function update(Request $request, $id)
+    public function update(BeritaUpdateRequest $request, Berita $berita)
     {
-        // Validasi input
-        $validatedData = $request->validate([
-            'judul' => 'required|string|max:255',
-            'isi' => 'required|string',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'tanggal' => 'required|date',
-            'kategori' => 'required|string|max:100',
-            'organisasi' => 'required|string|max:100',
-        ]);
-
-        // Cari berita berdasarkan ID
-        $berita = Berita::findOrFail($id);
-
-        // Siapkan data awal
-        $data = $validatedData;
-
-        // Folder tujuan upload (harus di dalam public/ biar bisa diakses browser)
-        $targetPath = public_path('uploads/berita_images');
-        if (!file_exists($targetPath)) {
-            mkdir($targetPath, 0755, true);
-        }
-
-        // Handle update gambar (hanya ganti kalau ada upload baru)
-        foreach (['gambar', 'gambar2', 'gambar3'] as $field) {
-            if ($request->hasFile($field)) {
-                // Hapus gambar lama (jika ada & file memang eksis)
-                if ($berita->$field && file_exists(public_path($berita->$field))) {
-                    unlink(public_path($berita->$field));
-                }
-
-                // Upload gambar baru
-                $namaFile = time() . '_' . $request->file($field)->getClientOriginalName();
-                $request->file($field)->move($targetPath, $namaFile);
-
-                // Simpan path ke DB
-                $data[$field] = '/uploads/berita_images/' . $namaFile;
-            } else {
-                // Kalau tidak ada upload baru, tetap pakai gambar lama
-                $data[$field] = $berita->$field;
-            }
-        }
-
-        // Update berita
-        $berita->update($data);
-
-        return redirect()->route('berita')->with('success', 'Berita berhasil diperbarui.');
+        $this->beritaService->update(
+            berita: $berita,
+            data: $request->validated(),
+            images: [
+                'gambar' => $request->file('gambar'),
+                'gambar2' => $request->file('gambar2'),
+                'gambar3' => $request->file('gambar3'),
+            ]
+        );
+        return redirect()->route('berita.index')->with('success', 'Berita berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy(Berita $berita)
     {
-        // Cari berita berdasarkan ID
-        $berita = Berita::findOrFail($id);
+        $this->beritaService->destroy($berita);
 
-        // Hapus data dari database
-        $berita->delete();
-
-        return redirect()->route('berita')->with('success', 'Berita berhasil dihapus.');
+        return redirect()
+            ->route('berita.index')
+            ->with('success', 'Berita berhasil dihapus.');
     }
 
-    public function show($slug)
+    public function show(string $slug)
     {
-        // Ambil berita sesuai slug
-        $berita = Berita::where('slug', $slug)->firstOrFail();
+        $data = $this->beritaService->getDetailBySlug($slug);
 
-        // Ambil berita lain untuk ditampilkan di bawah
-        $beritaLain = Berita::where('id', '!=', $berita->id)
-            ->take(PHP_INT_MAX)
-            ->get();
-
-        return view('components.detail-news', compact('berita', 'beritaLain'));
+        return view('components.detail-news', $data);
     }
 
 

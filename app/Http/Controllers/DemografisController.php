@@ -10,7 +10,7 @@ class DemografisController extends Controller
     public function index()
     {
         $demografis = Demografis::first();
-        return view('admin.demografis', compact('demografis'));
+        return view('admin.demografis.index', compact('demografis'));
     }
 
     public function update(Request $request)
@@ -36,6 +36,6 @@ class DemografisController extends Controller
             Demografis::create($validatedData);
         }
 
-        return redirect()->route('demografis')->with('success', 'Data demografis berhasil diperbarui.');
+        return redirect()->route('demografis.index')->with('success', 'Data demografis berhasil diperbarui.');
     }
 }

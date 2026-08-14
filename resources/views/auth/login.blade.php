@@ -32,14 +32,6 @@
                         <h1 class="text-2xl font-semibold leading-snug text-white md:text-3xl">
                             Kepenghuluan Sintong Pusaka
                         </h1>
-                        <p class="mt-4 text-sm leading-relaxed text-white/70">
-                            Kabupaten Rokan Hilir. Kelola berita, galeri, data aparat, dan demografi desa dalam satu
-                            dashboard administrasi.
-                        </p>
-                    </div>
-                    <div class="mt-10 flex items-center gap-2 text-xs text-white/50">
-                        <i data-lucide="shield-check" class="h-3.5 w-3.5"></i>
-                        Akses khusus perangkat desa
                     </div>
                 </div>
 
@@ -85,7 +77,8 @@
                         <div>
                             <label for="email" class="admin-label">Email</label>
                             <div class="relative">
-                                <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                                <span
+                                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
                                     <i data-lucide="mail" class="h-4 w-4"></i>
                                 </span>
                                 <input type="email" name="email" id="email" value="{{ old('email') }}"
@@ -101,7 +94,8 @@
                         <div>
                             <label for="password" class="admin-label">Password</label>
                             <div class="relative">
-                                <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                                <span
+                                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
                                     <i data-lucide="lock" class="h-4 w-4"></i>
                                 </span>
                                 <input type="password" name="password" id="password" placeholder="Masukkan password"
@@ -118,14 +112,14 @@
                         </div>
 
                         {{-- Submit --}}
-                        <button type="submit" class="btn-primary w-full py-3">
+                        <button type="submit"
+                            class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60">
                             Masuk ke dashboard
                         </button>
                     </form>
 
                     <div class="mt-6 flex items-center gap-2 text-xs text-muted-foreground">
-                        <i data-lucide="lock-keyhole" class="h-3.5 w-3.5"></i>
-                        Koneksi terenkripsi dan aman
+
                     </div>
                 </div>
             </div>

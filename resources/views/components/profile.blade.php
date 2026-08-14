@@ -4,7 +4,7 @@
         <!-- Sejarah & Visi Misi -->
         <div class="mb-24">
             <div class="mb-16 text-center">
-                <p class="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+                <p class="mb-4 text-xl font-semibold uppercase tracking-[0.28em] text-primary">
                     Profil Desa
                 </p>
 
@@ -132,8 +132,9 @@
 
                                 <div class="border-l-2 border-secondary pl-6">
                                     <p class="font-sans text-2xl italic leading-10 text-primary">
-                                        Mewujudkan Kepenghuluan Sintong Pusaka sebagai sentra kelapa sawit berkelanjutan
-                                        dan masyarakat yang sejahtera pada tahun 2030.
+                                        Mewujudkan Kepenghuluan Sintong Pusaka yang maju, mandiri, sejahtera, dan
+                                        berkelanjutan melalui pelayanan pemerintahan yang baik dan pembangunan yang
+                                        merata.
                                     </p>
                                 </div>
                             </div>
@@ -144,26 +145,40 @@
                                 </p>
 
                                 <div class="space-y-5 text-lg leading-9 text-foreground/90">
-
                                     <div class="border-b border-dashed border-border pb-4">
                                         <div class="flex items-start gap-3">
                                             <span class="mt-3 h-px w-4 bg-primary"></span>
-                                            <span>Meningkatkan produktivitas kelapa sawit melalui teknologi
-                                                modern</span>
+                                            <span>Meningkatkan kualitas pelayanan pemerintahan yang cepat, transparan,
+                                                dan akuntabel.
+                                            </span>
                                         </div>
                                     </div>
 
                                     <div class="border-b border-dashed border-border pb-4">
                                         <div class="flex items-start gap-3">
                                             <span class="mt-3 h-px w-4 bg-primary"></span>
-                                            <span>Mengembangkan ekonomi kerakyatan berbasis kelapa sawit</span>
+                                            <span>
+                                                Mendorong pertumbuhan ekonomi masyarakat melalui pengembangan usaha dan
+                                                potensi lokal.
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="border-b border-dashed border-border pb-4">
+                                        <div class="flex items-start gap-3">
+                                            <span class="mt-3 h-px w-4 bg-primary"></span>
+                                            <span>
+                                                Mewujudkan lingkungan desa yang bersih, sehat, aman, dan berkelanjutan.
+                                            </span>
                                         </div>
                                     </div>
 
                                     <div class="pb-2">
                                         <div class="flex items-start gap-3">
                                             <span class="mt-3 h-px w-4 bg-primary"></span>
-                                            <span>Menerapkan praktik pertanian ramah lingkungan</span>
+                                            <span> Meningkatkan kualitas pendidikan, kesehatan, dan kesejahteraan sosial
+                                                masyarakat.
+                                            </span>
                                         </div>
                                     </div>
 
@@ -182,17 +197,13 @@
         <div class="mb-24">
 
             <div class="mb-16 text-center">
-                <p class="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+                <p class="mb-4 text-xl font-semibold uppercase tracking-[0.28em] text-primary">
                     Tata Kelola
                 </p>
 
                 <h2 class="text-4xl font-semibold text-primary md:text-5xl">
                     Struktur Pemerintahan Desa
                 </h2>
-
-                <p class="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-                    Susunan perangkat Kepenghuluan Sintong Pusaka.
-                </p>
             </div>
 
             @php

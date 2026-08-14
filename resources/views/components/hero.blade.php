@@ -22,8 +22,8 @@
         <div class="mx-auto my-6 h-0.5 w-16 bg-secondary"></div>
 
         <p class="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg md:text-xl">
-            Desa penghasil kelapa sawit terbaik di Kabupaten Rokan Hilir, membangun ekonomi rakyat yang sejahtera
-            melalui pertanian berkelanjutan dan tata kelola pemerintahan yang transparan.
+            Membangun desa yang maju dan sejahtera melalui pelayanan publik yang profesional, pembangunan berkelanjutan,
+            dan pemerintahan yang terbuka serta terpercaya.
         </p>
         <a href="#profil"
             class="inline-flex items-center gap-2 rounded-md bg-secondary px-6 py-3 text-sm font-semibold text-primary shadow-lg shadow-black/10 transition hover:brightness-105">
@@ -31,29 +31,3 @@
         </a>
     </div>
 </section>
-
-{{-- <div class="relative z-10 mt-16 border-t border-border bg-background">
-        <div
-            class="mx-auto grid max-w-6xl grid-cols-1 divide-y divide-border sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:divide-border/60">
-            <div class="border-border/60 px-6 py-8 text-center sm:border-r">
-                <div class="font-serif text-3xl font-bold text-primary">2.720</div>
-                <p class="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    Jiwa Penduduk
-                </p>
-            </div>
-
-            <div class="border-border/60 px-6 py-8 text-center sm:border-r">
-                <div class="font-serif text-3xl font-bold text-primary">7.000 Ha</div>
-                <p class="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    Lahan Kelapa Sawit
-                </p>
-            </div>
-
-            <div class="px-6 py-8 text-center">
-                <div class="font-serif text-3xl font-bold text-primary">253,21 Km²</div>
-                <p class="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    Luas Wilayah
-                </p>
-            </div>
-        </div>
-    </div> --}}

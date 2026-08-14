@@ -6,6 +6,7 @@ use App\Models\AparatDesa;
 use App\Models\Berita;
 use App\Models\Demografis;
 use App\Models\GaleriFoto;
+use App\Models\ProfilDesa;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -95,7 +96,7 @@ class HomeController extends Controller
             'galeriFotos',
             'selectedGaleriOrg',
             'categories',
-            'organisasi'
+            'organisasi',
         ));
     }
 }

@@ -2,102 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Request\GaleriStoreRequest;
+use App\Http\Request\GaleriUpdateRequest;
+use App\Http\Services\GaleriService;
 use App\Models\Galeri;
-use App\Models\GaleriFoto;
 use Illuminate\Http\Request;
-use Storage;
 
 class GaleriController extends Controller
 {
-    public function index()
+    public function __construct(protected GaleriService $galeriService)
     {
-        $galeri = Galeri::with(relations: 'fotos')->get();
-        return view('admin.galeri', compact('galeri'));
+    }
+
+    public function index(Request $request)
+    {
+        $validated = $request->validate([
+            'search' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $galeri = $this->galeriService->index($validated['search'] ?? null);
+        return view('admin.galeri.index', compact('galeri'));
     }
 
     public function create()
     {
-        $kategori = ['Politik', 'Ekonomi', 'Sosial', 'Budaya', 'Olahraga', 'Teknologi', 'Lingkungan'];
-        $organisasi = ['Kepenghuluan', 'Badan Usaha Milik Kepenghuluan', 'Badan Permusyawaratan Kepenghuluan', 'Lembaga Pemberdayaan Masyarakat', 'Karang Taruna', 'PKK', 'PKKBN'];
-        return view('admin.galeri-create', compact('kategori', 'organisasi'));
+        return view('admin.galeri.create');
     }
 
-    public function store(Request $request)
+    public function store(GaleriStoreRequest $request)
     {
-        // Validasi input
-        $validated = $request->validate([
-            'judul' => 'required|string|max:255',
-            'kategori' => 'required|string|max:100',
-            'organisasi' => 'nullable|string|max:255',
-        ]);
-
-        // Simpan data ke database
-        $galeri = Galeri::create([
-            'judul' => $validated['judul'],
-            'kategori' => $validated['kategori'] ?? null,
-            'organisasi' => $validated['organisasi'] ?? null,
-        ]);
-
-        if ($galeri && $galeri->id) {
-            foreach ($request->file('gambar') as $file) {
-                $path = $file->store('galeri_images', 'public');
-                GaleriFoto::create([
-                    'galeri_id' => $galeri->id,
-                    'gambar' => $path,
-                ]);
-            }
-        }
-
-        return redirect()->route('galeri')->with('success', 'Foto berhasil ditambahkan.');
+        $this->galeriService->store($request->validated(), $request->file('gambar'));
+        return redirect()->route('galeri.index')->with('success', 'Foto berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function edit(Galeri $galeri)
     {
-        // Cari galeri berdasarkan ID
-        $galeri = Galeri::findOrFail($id);
-        $kategori = ['Politik', 'Ekonomi', 'Sosial', 'Budaya', 'Olahraga', 'Teknologi', 'Lingkungan'];
-        $organisasi = ['Kepenghuluan', 'Badan Usaha Milik Kepenghuluan', 'Badan Permusyawaratan Kepenghuluan', 'Lembaga Pemberdayaan Masyarakat', 'Karang Taruna', 'PKK', 'PKKBN'];
-        return view('admin.galeri-create', compact('galeri', 'kategori', 'organisasi'));
+        return view('admin.galeri.update', compact('galeri'));
     }
 
-    public function update(Request $request, Galeri $galeri)
+    public function update(GaleriUpdateRequest $request, Galeri $galeri)
     {
-        $validated = $request->validate([
-            'judul' => 'required|string|max:255',
-            'kategori' => 'nullable|string|max:100',
-            'organisasi' => 'nullable|string|max:255',
-        ]);
-
-        $galeri->update($validated);
-
-        // Jika upload foto baru → simpan ke galeri_fotos
-        if ($request->hasFile('gambar')) {
-            foreach ($request->file('gambar') as $file) {
-                $path = $file->store('galeri_images', 'public');
-                $galeri->fotos()->create(['gambar' => $path]);
-            }
-        }
-
-        return redirect()->route('galeri')->with('success', 'Galeri berhasil diperbarui');
+        $this->galeriService->update($galeri, $request->validated(), $request->file('gambar'));
+        return redirect()->route('galeri.index')->with('success', 'Galeri berhasil diperbarui');
     }
 
-
-    public function destroy($id)
+    public function destroy(Galeri $galeri)
     {
-        $galeri = Galeri::findOrFail($id);
-
-        // Hapus semua foto fisik
-        foreach ($galeri->fotos as $foto) {
-            if ($foto->gambar && Storage::disk('public')->exists($foto->gambar)) {
-                Storage::disk('public')->delete($foto->gambar);
-            }
-            $foto->delete();
-        }
-
-        // Hapus galeri utama
-        $galeri->delete();
-
-        return redirect()->route('galeri')->with('success', 'Galeri berhasil dihapus');
+        $this->galeriService->destroy($galeri);
+        return redirect()->route('galeri.index')->with('success', 'Galeri berhasil dihapus');
     }
 
 

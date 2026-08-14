@@ -70,128 +70,6 @@
             <canvas id="chartGaleri" class="h-64 w-full"></canvas>
         </div>
     </div>
-
-    {{-- Berita Terbaru --}}
-    <div class="rounded-3xl border border-border bg-white shadow-sm">
-        <div class="flex flex-col gap-3 border-b border-border px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-                <h2 class="flex items-center gap-2 text-lg font-semibold text-foreground">
-                    <i data-lucide="newspaper" class="h-5 w-5 text-primary"></i>
-                    Berita Terbaru
-                </h2>
-                <p class="mt-1 text-sm text-muted-foreground">5 artikel yang terakhir ditambahkan</p>
-            </div>
-            <a href="{{ route('berita') }}"
-                class="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-medium text-primary">
-                <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>
-                Lihat semua
-            </a>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead class="bg-muted/60">
-                    <tr class="text-left text-muted-foreground">
-                        <th class="px-6 py-3 font-medium">Judul</th>
-                        <th class="px-6 py-3 font-medium">Kategori</th>
-                        <th class="px-6 py-3 font-medium">Organisasi</th>
-                        <th class="px-6 py-3 text-right font-medium">Tanggal</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-border">
-                    @forelse ($beritaTerbaru as $item)
-                        <tr class="hover:bg-muted/40">
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-muted">
-                                        @if ($item->gambar)
-                                            <img src="{{ asset($item->gambar) }}" alt=""
-                                                class="h-full w-full object-cover">
-                                        @else
-                                            <div class="flex h-full w-full items-center justify-center text-xs font-semibold text-primary">
-                                                {{ strtoupper(substr($item->judul, 0, 2)) }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="max-w-xs truncate font-medium text-foreground">{{ $item->judul }}</div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 text-muted-foreground">{{ $item->kategori ?? '-' }}</td>
-                            <td class="px-6 py-4 text-muted-foreground">{{ $item->organisasi ?? '-' }}</td>
-                            <td class="px-6 py-4 text-right text-muted-foreground">
-                                {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d M Y') }}
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="px-6 py-8 text-center text-muted-foreground">Belum ada berita.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    {{-- Galeri Terbaru --}}
-    <div class="rounded-3xl border border-border bg-white shadow-sm">
-        <div class="flex flex-col gap-3 border-b border-border px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-                <h2 class="flex items-center gap-2 text-lg font-semibold text-foreground">
-                    <i data-lucide="images" class="h-5 w-5 text-secondary"></i>
-                    Galeri Terbaru
-                </h2>
-                <p class="mt-1 text-sm text-muted-foreground">5 album yang terakhir ditambahkan</p>
-            </div>
-            <a href="{{ route('galeri') }}"
-                class="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-medium text-primary">
-                <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>
-                Lihat semua
-            </a>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead class="bg-muted/60">
-                    <tr class="text-left text-muted-foreground">
-                        <th class="px-6 py-3 font-medium">Album</th>
-                        <th class="px-6 py-3 font-medium">Kategori</th>
-                        <th class="px-6 py-3 font-medium">Organisasi</th>
-                        <th class="px-6 py-3 text-right font-medium">Jumlah Foto</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-border">
-                    @forelse ($galeriTerbaru as $item)
-                        <tr class="hover:bg-muted/40">
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-muted">
-                                        @if ($item->fotos->first())
-                                            <img src="{{ asset('storage/' . $item->fotos->first()->gambar) }}" alt=""
-                                                class="h-full w-full object-cover">
-                                        @else
-                                            <div class="flex h-full w-full items-center justify-center text-xs font-semibold text-secondary">
-                                                {{ strtoupper(substr($item->judul, 0, 2)) }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="max-w-xs truncate font-medium text-foreground">{{ $item->judul }}</div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 text-muted-foreground">{{ $item->kategori ?? '-' }}</td>
-                            <td class="px-6 py-4 text-muted-foreground">{{ $item->organisasi ?? '-' }}</td>
-                            <td class="px-6 py-4 text-right">
-                                <span class="rounded-full bg-[#FBEFD1] px-2.5 py-1 text-xs font-semibold text-[#8a6a1e]">
-                                    {{ $item->fotos_count }} foto
-                                </span>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="px-6 py-8 text-center text-muted-foreground">Belum ada galeri.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
 @endsection
 
 @push('scripts')
@@ -233,11 +111,17 @@
                     responsive: true,
                     maintainAspectRatio: true,
                     aspectRatio: 2,
-                    plugins: { legend: { display: false } },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            ticks: { precision: 0 }
+                            ticks: {
+                                precision: 0
+                            }
                         }
                     }
                 }
@@ -266,14 +150,19 @@
                     responsive: true,
                     maintainAspectRatio: true,
                     aspectRatio: 2,
-                    plugins: { legend: { display: false } },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            suggestedMax: chartData.galeri.data.length > 0
-                                ? Math.max(...chartData.galeri.data) * 1.2
-                                : 10,
-                            ticks: { precision: 0 }
+                            suggestedMax: chartData.galeri.data.length > 0 ?
+                                Math.max(...chartData.galeri.data) * 1.2 : 10,
+                            ticks: {
+                                precision: 0
+                            }
                         }
                     }
                 }

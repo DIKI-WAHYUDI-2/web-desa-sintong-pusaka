@@ -24,18 +24,6 @@
 
         {{-- CONTENT --}}
         <div class="flex min-w-0 flex-1 flex-col bg-[#F3F6F2] lg:ml-72">
-            {{-- TOPBAR --}}
-            <header
-                class="sticky top-0 z-30 flex items-center justify-end gap-4 border-b border-border bg-white px-6 py-3">
-
-                <div class="flex items-center gap-2.5">
-                    <div
-                        class="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
-                        A
-                    </div>
-                    <span class="hidden text-sm font-medium text-foreground sm:inline">Admin Desa</span>
-                </div>
-            </header>
 
             <main class="flex-1 space-y-6 p-6">
                 {{-- PAGE BANNER --}}

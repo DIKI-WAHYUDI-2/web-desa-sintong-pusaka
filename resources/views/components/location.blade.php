@@ -1,7 +1,7 @@
 <section id="lokasi" class="scroll-mt-20 bg-muted py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="mx-auto mb-16 max-w-3xl text-center">
-            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+            <p class="mb-4 text-xl font-semibold uppercase tracking-[0.28em] text-primary">
                 Peta Wilayah
             </p>
             <h2 class="text-4xl font-semibold text-primary md:text-5xl">
@@ -29,8 +29,7 @@
             <!-- Peta -->
             <div class="min-h-[420px] bg-muted">
                 <iframe src="https://desa-sintongpusaka.my.id/Peta/" width="100%" height="100%"
-                    class="h-full min-h-[420px] w-full" frameborder="0" style="border: none;"
-                    allowfullscreen></iframe>
+                    class="h-full min-h-[420px] w-full" frameborder="0" style="border: none;" allowfullscreen></iframe>
             </div>
 
             <!-- Informasi Wilayah -->
